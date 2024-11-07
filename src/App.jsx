@@ -1,11 +1,32 @@
-import Login from "./LoginPage/Login"
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import Login from "./Pages/Login/Login";
+import Home from "./Pages/Home/Home";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
-  return (
-    <div>
-      <Login/>
-    </div>
-  )
-}
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-export default App
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
+
+  return (
+    <ToastContainer/>,
+    <Routes>
+      <Route
+        path="/login"
+        element={token ? <Navigate to="/" /> : <Login />}
+      />
+      <Route
+        path="/"
+        element={token ? <Home /> : <Navigate to="/login" />}
+      />
+    </Routes>
+  );
+};
+
+export default App;
