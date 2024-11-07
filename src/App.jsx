@@ -3,6 +3,7 @@ import Login from "./Pages/Login/Login";
 import Home from "./Pages/Home/Home";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/ReactToastify.css'
 
 const App = () => {
   const token = localStorage.getItem("token");
