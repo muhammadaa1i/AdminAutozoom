@@ -1,0 +1,12 @@
+.hidden-file-input {
+    display: none; 
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    padding: 8px 12px;
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
