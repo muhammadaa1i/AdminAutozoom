@@ -1,0 +1,48 @@
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(54, 47, 44, 0.75);
+    overflow: hidden;
+    overflow-y: auto;
+    transition: opacity 0.3s;
+    z-index: 999;
+}
+
+.modal-wrapper{
+    position: absolute;
+    top: -100px;
+    left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+}
+
+.modal-content{
+    position: relative;
+    width: 415px;
+    height: 115px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 20px 24px;
+    transform: translateY(-50px);
+    transition: opacity 0.3s transform 0.3s;
+}
+
+.modal-close-button{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+.modal-ok-button{
+
+}

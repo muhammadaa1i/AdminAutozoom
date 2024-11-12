@@ -10,3 +10,22 @@
     cursor: pointer;
     text-align: center;
   }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(54, 47, 44, 0.75);
+    z-index: 10; 
+  }
+  
+  .change-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+  }
+  
