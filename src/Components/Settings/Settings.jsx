@@ -324,7 +324,7 @@ const Settings = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.name_en}
                     type="text"
-                    required
+                    value={name_en}
                     minLength={3} />
                 </div>
 
@@ -335,7 +335,7 @@ const Settings = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.name_ru}
                     type="text"
-                    required
+                    value={name_ru}
                     minLength={3} />
                 </div>
 
@@ -347,7 +347,7 @@ const Settings = () => {
                       type="file"
                       className="file-input"
                       accept="image/png, image/jpeg"
-                      required
+                      value={pic}
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {

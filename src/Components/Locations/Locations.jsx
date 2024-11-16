@@ -256,7 +256,7 @@ const Locations = () => {
                       type="file"
                       className="file-input"
                       accept="image/png, image/jpeg"
-                      required
+                      value={pic}
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {
