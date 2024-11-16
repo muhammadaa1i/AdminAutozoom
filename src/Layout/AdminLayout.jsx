@@ -2,27 +2,37 @@ import React, { useState } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import './AdminLayout.css'
 import logo from '../Components/images/logog.jpg'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AdminLayout = () => {
 
     const navigate = useNavigate();
+    const location = useLocation()
     const [isSidebarOpen, setisSidebarOpen] = useState(false)
+    const [isLogoutVisible, setIsLogoutVisible] = useState(false)
 
     function handleLogout() {
-        localStorage.removeItem("token");
-        navigate("login");
+        localStorage.removeItem("token")
+        toast.info("Logged out successfully!")
+        navigte("login")
     }
 
     const toggleSidebar = () => {
         setisSidebarOpen(!isSidebarOpen);
     }
 
+    const toggleLogout = () => {
+        setIsLogoutVisible(!isLogoutVisible);
+    };
+
     const isActiveLink = (path) => location.pathname.includes(path);
 
     return (
         <div className='main p-0 flex'>
+            <ToastContainer position='top-center' autoClose={30000} />
 
-            <div className={`menu flex flex-col float-left ${isSidebarOpen ? 'w-[80px]' : 'w-[230px]'} h-[100vh] bg-blue-950 text-white`}>
+            <div className={`menu flex flex-col float-left ${isSidebarOpen ? 'w-[80px]' : 'w-[230px]'} h-[100%] fixed bg-blue-950 text-white z-20`}>
 
                 <div className={`w-full h-[55px] mt-2 flex items-center justify-center ${isSidebarOpen ? '' : 'px-[4px]'}`}>
                     {isSidebarOpen && (
@@ -94,24 +104,26 @@ const AdminLayout = () => {
 
             <div className="flex flex-col flex-grow">
 
-                <nav className={`container w-full h-[65px] top-0 left-0  z-10 flex py-[10px] items-center `}>
+                <nav className={`w-[100%] h-[65px] top-0 left-0 fixed bg-white z-10 flex py-[10px] items-center `}>
 
                     <button onClick={toggleSidebar} className={`w-[46px] h-[32px] rounded-md bg-[#1677FF] absolute ${!isSidebarOpen ? 'left-[250px]' : 'left-[100px]'} transition-all duration-300`}>
                         <i className="fa-solid fa-bars text-white"></i>
                     </button>
 
-                    <button className="btn absolute right-[40px] border-2 border-gray-400 w-[145px] h-[42px] px-[20px] flex items-center justify-between text-xl font-sans rounded-xl">
+                    <button onClick={toggleLogout} className="btn absolute right-[40px] border-2 border-gray-400 w-[145px] h-[42px] px-[20px] flex items-center justify-between text-xl font-sans rounded-xl">
                         <i className="fa-regular fa-user"></i>
                         Admin
                     </button>
 
-                    <button onClick={handleLogout} className="logout-btn hidden absolute top-[65px] right-[40px] w-[145px] h-[40px] border-2 border-gray-400 text-center text-xl pb-2 pt-1 rounded-xl">
-                        Logout
-                    </button>
+                    {isLogoutVisible && (
+                        <button onClick={handleLogout} className="logout-btn absolute top-[65px] right-[40px] w-[145px] h-[40px] border-2 border-gray-400 text-center text-xl pb-2 pt-1 rounded-xl">
+                            Logout
+                        </button>
+                    )}
 
                 </nav>
 
-                <div className="flex-grow bg-blue-200 p-4">
+                <div className={`outlet h-[100vh] flex-grow bg-blue-200 p-4 pt-[80px] ${isSidebarOpen ? 'pl-[120px]' : 'pl-[250px]'}`}>
                     <Outlet />
                 </div>
 

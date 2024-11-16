@@ -30,7 +30,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="admin" element={token ? <AdminLayout /> : <Navigate to="/login" replace />}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard/>}/>
           <Route path="settings" element={<Settings />} />
           <Route path="brands" element={<Brands />} />
           <Route path="models" element={<Models />} />
