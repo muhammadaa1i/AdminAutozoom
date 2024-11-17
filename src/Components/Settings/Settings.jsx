@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import './Settings.css'
 import './DeleteModal.css'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Settings = () => {
@@ -131,14 +131,6 @@ const Settings = () => {
 
   return (
     <div className='main'>
-      <ToastContainer position="top-center" autoClose={3000} />
-
-      <span className='flex flex-row'>
-
-        <i className="fa-solid fa-magnifying-glass w-[37px] h-[32px] text-sm flex items-center justify-center border border-gray-400 rounded-l-md "></i>
-        <input type="text" placeholder='large size' className='w-[370px] h-[32px] border border-gray-400 rounded-r-md outline-none py-1 px-3 ' />
-
-      </span>
 
       <div className="main-in">
 
@@ -324,7 +316,6 @@ const Settings = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.name_en}
                     type="text"
-                    value={name_en}
                     minLength={3} />
                 </div>
 
@@ -335,7 +326,6 @@ const Settings = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.name_ru}
                     type="text"
-                    value={name_ru}
                     minLength={3} />
                 </div>
 

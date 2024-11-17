@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import './AdminLayout.css'
 import logo from '../Components/images/logog.jpg'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const AdminLayout = () => {
@@ -15,7 +15,7 @@ const AdminLayout = () => {
     function handleLogout() {
         localStorage.removeItem("token")
         toast.info("Logged out successfully!")
-        navigte("login")
+        navigate("login", { replace: true })
     }
 
     const toggleSidebar = () => {
@@ -23,14 +23,29 @@ const AdminLayout = () => {
     }
 
     const toggleLogout = () => {
-        setIsLogoutVisible(!isLogoutVisible);
-    };
+        setIsLogoutVisible((prev) => !prev);
+    }
+
+    const logoutRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (logoutRef.current && !logoutRef.current.contains(event.target)) {
+                setIsLogoutVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
 
     const isActiveLink = (path) => location.pathname.includes(path);
 
     return (
         <div className='main p-0 flex'>
-            <ToastContainer position='top-center' autoClose={30000} />
 
             <div className={`menu flex flex-col float-left ${isSidebarOpen ? 'w-[80px]' : 'w-[230px]'} h-[100%] fixed bg-blue-950 text-white z-20`}>
 
@@ -43,7 +58,7 @@ const AdminLayout = () => {
 
                 <div className={`menu-in flex flex-col gap-1 px-1 ${isSidebarOpen ? 'mt-3' : ''} `} >
 
-                    <Link className={`menu-link w-[${!isSidebarOpen ? '225px' : '72px'}] h-[40px] hover:bg-[#1677FF] rounded-md flex items-center pl-7 gap-3 ${isActiveLink('dashboard') ? 'bg-[#1677FF]' : 'hover:bg-[#1677FF]'}`} to={'dashboard'}
+                    <Link className={`menu-link w-[${!isSidebarOpen ? '225px' : '72px'}] h-[40px] hover:bg-[#1677FF] rounded-md flex items-center pl-7 gap-3 ${isActiveLink('dashboard') ? 'focus:bg-[#1677FF]' : 'hover:bg-[#1677FF]'}`} to={'dashboard'}
                         onMouseEnter={(e) => isActiveLink('') ? e.currentTarget.classList.remove('hover:bg-[#1677FF]') : e.currentTarget.classList.add('hover:bg-[#1677FF]')}
                         onMouseLeave={(e) => e.currentTarget.classList.remove('hover:bg-[#1677FF]')}>
                         <i className="fa-solid fa-house"></i>
@@ -116,9 +131,13 @@ const AdminLayout = () => {
                     </button>
 
                     {isLogoutVisible && (
-                        <button onClick={handleLogout} className="logout-btn absolute top-[65px] right-[40px] w-[145px] h-[40px] border-2 border-gray-400 text-center text-xl pb-2 pt-1 rounded-xl">
-                            Logout
-                        </button>
+                        <div ref={logoutRef}>
+                            <button
+                                onClick={handleLogout}
+                                className="logout-btn absolute top-[65px] right-[40px] w-[145px] h-[40px] border-2 border-gray-400 bg-white text-center text-xl pb-2 pt-1 rounded-xl">
+                                Logout
+                            </button>
+                        </div>
                     )}
 
                 </nav>

@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -128,8 +128,7 @@ const Locations = () => {
 
   return (
     <div className='main'>
-      <ToastContainer position="top-center" autoClose={3000} />
-
+ 
       <div className="main-in">
 
         <table className='container bg-white mt-5'>
@@ -234,7 +233,6 @@ const Locations = () => {
                     onChange={(e) => SetName(e?.target?.value)}
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     type="text"
-                    required
                     minLength={3} />
                 </div>
 
@@ -244,7 +242,6 @@ const Locations = () => {
                     onChange={(e) => SetText(e?.target?.value)}
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     type="text"
-                    required
                     minLength={3} />
                 </div>
 

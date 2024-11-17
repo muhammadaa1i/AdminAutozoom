@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const Models = () => {
 
@@ -130,14 +130,6 @@ const Models = () => {
 
   return (
     <div className='main'>
-      <ToastContainer position="top-center" autoClose={3000} />
-
-      <span className='flex flex-row'>
-
-        <i className="fa-solid fa-magnifying-glass w-[37px] h-[32px] text-sm flex items-center justify-center border border-gray-400 rounded-l-md "></i>
-        <input type="text" placeholder='large size' className='w-[370px] h-[32px] border border-gray-400 rounded-r-md outline-none py-1 px-3 ' />
-
-      </span>
 
       <div className="main-in">
 
@@ -251,7 +243,7 @@ const Models = () => {
                   <span className='w-[120px] h-[32px] border border-gray-300 rounded-md flex items-center justify-center px-[11px]'>
                     <select
                       className='outline-none'
-                      value={selectBrandId} 
+                      value={selectBrandId}
                       onChange={(e) => setSelectBrandId(e?.target?.value)}>
                       {
                         brandsGet.map((item, index) => {
@@ -313,7 +305,6 @@ const Models = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     value={name}
                     type="text"
-                    required
                     minLength={2} />
                 </div>
 

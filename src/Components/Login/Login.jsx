@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = () => {   
     const [number, setNumber] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -27,23 +27,21 @@ const Login = () => {
                 if (result?.success) {
                     toast.success(result?.message);
                     localStorage.setItem("token", result?.data?.tokens?.accessToken?.token);
-                    navigate('/admin');
+                    navigate('/admin/dashboard');
                 } else {
                     toast.error(result?.message);
                 }
             })
-            .catch((error) => {
-                toast.error("Something went wrong. Please try again.");
-            });
     }
 
     return (
-        <div id='login' className='box mt-[220px] '>
+        <div className='box mt-[220px] '>
             <form onSubmit={loginSubmit}>
                 <div className='flex flex-col gap-3 mb-8'>
                     <input
                         onChange={(e) => setNumber(e.target.value)}
                         type="number"
+                        minLength={5}
                         placeholder='Phone Number'
                         className='phone w-[250px] text-sm text-[#122558] h-auto outline-none pt-2 pb-2 pl-2 rounded-lg'
                         required
@@ -51,6 +49,7 @@ const Login = () => {
                     <input
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
+                        minLength={5}
                         placeholder='Password'
                         className='phone w-[250px] h-auto text-sm text-[#122558] outline-none pt-2 pb-2 pl-2 rounded-lg'
                         required

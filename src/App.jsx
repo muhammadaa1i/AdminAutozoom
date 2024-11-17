@@ -11,6 +11,7 @@ import Models from './Components/Models/Models';
 import Locations from './Components/Locations/Locations';
 import Cities from './Components/Cities/Cities';
 import Cars from './Components/Cars/Cars';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -28,9 +29,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to={token ? "/admin/dashboard" : "/login"} replace />} />
         <Route path="login" element={<Login />} />
-        <Route path="admin" element={token ? <AdminLayout /> : <Navigate to="/login" replace />}>
+        <Route path="/admin/dashboard" element={token ? <AdminLayout /> : <Navigate to="/login" replace />}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard/>}/>
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="settings" element={<Settings />} />
           <Route path="brands" element={<Brands />} />
           <Route path="models" element={<Models />} />

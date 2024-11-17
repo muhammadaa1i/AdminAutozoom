@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -131,7 +131,6 @@ const Cities = () => {
 
   return (
     <div className='main'>
-      <ToastContainer position="top-center" autoClose={3000} />
 
       <div className="main-in">
 
@@ -318,8 +317,7 @@ const Cities = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.name}
                     type="text"
-                    required
-                    minLength={3} />
+                    minLength={2} />
                 </div>
 
                 <div className='flex flex-col gap-1'>
@@ -329,8 +327,7 @@ const Cities = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     defaultValue={data.find((d) => d.id === selectedCategoryId)?.text}
                     type="text"
-                    required
-                    minLength={3} />
+                    minLength={2} />
                 </div>
 
                 <div className='flex flex-col gap-2'>
@@ -341,7 +338,6 @@ const Cities = () => {
                       type="file"
                       className="file-input"
                       accept="image/png, image/jpeg"
-                      required
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {

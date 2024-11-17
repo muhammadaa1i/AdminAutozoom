@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -10,6 +10,7 @@ const Cars = () => {
   const [data, setData] = useState([])
   const [modalInfoOpen, setModalInfoOpen] = useState(false)
   const [addModalOpen, setAddModalOpen] = useState(false)
+  const [selectCategoryId, setSelectCategoryId] = useState('')
 
   function getCategory() {
     axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/cars')
@@ -22,6 +23,7 @@ const Cars = () => {
   useEffect(() => {
     getCategory()
   }, [])
+  console.log(selectCategoryId, "selectCategoryId")
 
 
   const [color, setColor] = useState('')
@@ -91,8 +93,8 @@ const Cars = () => {
       });
   }
 
-  const [selectCategoryId, setSelectCategoryId] = useState('')
   const [categoryGet, setCategoryGet] = useState('')
+  const [categoryID, setCategoryID] = useState('')
 
   function getCategories() {
     axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/categories')
@@ -168,13 +170,8 @@ const Cars = () => {
   }, [])
 
   const [editModalOpen, setEditModalOpen] = useState(false)
-  const [categoryNameEn, setCategoryNameEn] = useState('')
-  const [BrandTitle, setBrandTitle] = useState('')
-  const [ModelName, setModelName] = useState('')
-  const [LocationsName, setLocationsName] = useState('')
-  const [CityName, setCityName] = useState('')
 
-  function editCategory(e) {
+  function editHandler(e) {
     e.preventDefault()
 
     const formdata = new FormData();
@@ -225,12 +222,35 @@ const Cars = () => {
       });
   }
 
+  function deleteHandler() {
+
+    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/cars/${selectCategoryId}`, {
+      method: 'Delete',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((res) => res.json())
+      .then((item) => {
+        if (item.success) {
+          console.log(item);
+          toast.success(item?.message)
+          setModalInfoOpen(false)
+          getCategory()
+        }
+        else {
+          toast.error(item?.message)
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      })
+  }
+
 
   return (
     <div>
 
       <div className="main-in">
-        <ToastContainer position="top-center" autoClose={3000} />
 
         <table className='container bg-white mt-5'>
 
@@ -273,6 +293,7 @@ const Cars = () => {
                       <button onClick={() => {
                         setModalInfoOpen(true)
                         setSelectCategoryId(item.id)
+                        setCategoryID(item.category_id)
                       }}
                         className='btn w-[52px] h-[32px] rounded-lg bg-red-500'>
                         <i className="fa-solid fa-trash text-white text-sm"></i>
@@ -684,10 +705,10 @@ const Cars = () => {
 
           <div className='container fixed inset-0 z-20 flex items-center justify-center p-5'>
 
-            <form onSubmit={editCategory} className='add-modal w-[520px] max-h-[90vh] overflow-y-auto m-auto py-10 px-5 bg-white rounded-2xl'>
+            <form onSubmit={editHandler} className='add-modal w-[520px] max-h-[90vh] overflow-y-auto m-auto py-10 px-5 bg-white rounded-2xl'>
 
               <div className='flex flex-row justify-between'>
-                <h1 className='font-semibold'>Add New Category</h1>
+                <h1 className='font-semibold'>Edit Category</h1>
                 <button onClick={() => setEditModalOpen(false)}>
                   <i className="fa-solid fa-x text-base text-gray-600"></i>
                 </button>
@@ -699,13 +720,9 @@ const Cars = () => {
                   <h1>*Category</h1>
                   <select
                     className='outline-none border border-gray-300 rounded-md p-1'
-                    value={selectCategoryId || ""}
-                    onChange={(e) => setCategoryNameEn(e?.target?.value)}>
-                    <option value='' disabled>
-                      Select Category
-                    </option>
+                    onChange={(e) => setSelectCategoryId(e?.target?.value)}>
                     {
-                      categoryGet.map((item, index) => {
+                      categoryGet?.map((item, index) => {
                         return <option
                           className='w-[120px] h-[32px] border border-gray-300 rounded-md' key={index} value={item.id}>
                           {item.name_en}
@@ -719,11 +736,8 @@ const Cars = () => {
                   <h1>*Brand</h1>
                   <select
                     className='outline-none border border-gray-300 rounded-md p-1'
-                    value={brandId || ''}
+                    value={editHandler?.data?.title}
                     onChange={(e) => setBrandTitle(e?.target?.value)}>
-                    <option value='' disabled>
-                      Select Brand
-                    </option>
                     {
                       brandGet.map((item, index) => {
                         return <option
