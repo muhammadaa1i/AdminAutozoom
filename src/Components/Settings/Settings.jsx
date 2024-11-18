@@ -179,7 +179,9 @@ const Settings = () => {
                       </button>
 
                       {modalInfoOpen && (
-                        <div className='modal'>
+                        <div
+                          onClick={() => setModalInfoOpen(false)}
+                          className='modal fixed top-0 left-0 w-full h-full z-99'>
                           <div className="modal-wrapper container">
                             <div className="modal-content">
                               <h1>Do you want to delete this brand?</h1>
@@ -214,7 +216,11 @@ const Settings = () => {
 
       {addModalOpen && (
         <>
-          <div className="overlay"></div>
+
+          <div
+            className="overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-99"
+            onClick={() => setAddModalOpen(false)}
+          ></div>
 
           <div className='container'>
 
@@ -294,7 +300,10 @@ const Settings = () => {
 
       {editModalOpen && (
         <>
-          <div className="overlay"></div>
+          <div
+            className="overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-99"
+            onClick={() => setEditModalOpen(false)}
+          ></div>
 
           <div className='container'>
 
@@ -337,7 +346,7 @@ const Settings = () => {
                       type="file"
                       className="file-input"
                       accept="image/png, image/jpeg"
-                      value={pic}
+                      defaultValue={pic}
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {

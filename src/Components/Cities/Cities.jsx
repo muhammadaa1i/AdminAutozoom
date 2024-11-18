@@ -181,7 +181,9 @@ const Cities = () => {
                       </button>
 
                       {modalInfoOpen && (
-                        <div className='modal'>
+                        <div
+                          onClick={() => setModalInfoOpen(false)}
+                          className='modal fixed top-0 left-0 w-full h-full z-99'>
                           <div className="modal-wrapper container">
                             <div className="modal-content">
                               <h1>Do you want to delete this brand?</h1>
@@ -215,7 +217,9 @@ const Cities = () => {
 
       {addModalOpen && (
         <>
-          <div className="overlay"></div>
+          <div
+            onClick={() => setAddModalOpen(false)}
+            className="overlay fixed top-0 left-0 w-full h-full z-99"></div>
 
           <div className='container'>
 
@@ -295,7 +299,9 @@ const Cities = () => {
 
       {editModalOpen && (
         <>
-          <div className="overlay"></div>
+          <div
+            onClick={() => setEditModalOpen(false)}
+            className="overlay fixed top-0 left-0 w-full h-full z-99"></div>
 
           <div className='container'>
 

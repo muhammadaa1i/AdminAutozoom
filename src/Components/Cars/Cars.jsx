@@ -8,6 +8,7 @@ const Cars = () => {
   const token = localStorage.getItem('token');
 
   const [data, setData] = useState([])
+  const [oneData, setOneData] = useState({})
   const [modalInfoOpen, setModalInfoOpen] = useState(false)
   const [addModalOpen, setAddModalOpen] = useState(false)
   const [selectCategoryId, setSelectCategoryId] = useState('')
@@ -18,7 +19,14 @@ const Cars = () => {
         setData(res?.data?.data)
       })
   }
-  console.log(data);
+
+  function getCategoryOne(id) {
+    axios.get(`https://autoapi.dezinfeksiyatashkent.uz/api/cars/${id}`)
+      .then((res) => {
+        setOneData(res?.data?.data)
+      })
+  }
+  console.log(oneData);
 
   useEffect(() => {
     getCategory()
@@ -285,6 +293,7 @@ const Cars = () => {
                         onClick={() => {
                           setEditModalOpen(true)
                           setSelectCategoryId(item.id)
+                          getCategoryOne(item?.id)
                         }}
                         className='btn w-[52px] h-[32px] bg-[#1677FF] rounded-lg '>
                         <i className="fa-solid fa-pencil text-white text-sm"></i>
@@ -300,7 +309,9 @@ const Cars = () => {
                       </button>
 
                       {modalInfoOpen && (
-                        <div className='modal'>
+                        <div
+                          onClick={() => setModalInfoOpen(false)}
+                          className='modal fixed top-0 left-0 w-full h-full z-99'>
                           <div className="modal-wrapper container">
                             <div className="modal-content">
                               <h1>Do you want to delete this brand?</h1>
@@ -334,7 +345,9 @@ const Cars = () => {
 
       {addModalOpen && (
         <>
-          <div className="overlay fixed inset-0 bg-black opacity-50 z-10"></div>
+          <div
+            onClick={() => setAddModalOpen(false)}
+            className="overlay fixed inset-0 bg-black opacity-50 z-99"></div>
 
           <div className='container fixed inset-0 z-20 flex items-center justify-center p-5'>
 
@@ -701,7 +714,9 @@ const Cars = () => {
 
       {editModalOpen && (
         <>
-          <div className="overlay fixed inset-0 bg-black opacity-50 z-10"></div>
+          <div
+            onClick={() => setEditModalOpen(false)}
+            className="overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-99"></div>
 
           <div className='container fixed inset-0 z-20 flex items-center justify-center p-5'>
 
@@ -719,6 +734,7 @@ const Cars = () => {
                 <div className='flex flex-col gap-1'>
                   <h1>*Category</h1>
                   <select
+                    // defaultValue={""}
                     className='outline-none border border-gray-300 rounded-md p-1'
                     onChange={(e) => setSelectCategoryId(e?.target?.value)}>
                     {
@@ -736,8 +752,8 @@ const Cars = () => {
                   <h1>*Brand</h1>
                   <select
                     className='outline-none border border-gray-300 rounded-md p-1'
-                    value={editHandler?.data?.title}
-                    onChange={(e) => setBrandTitle(e?.target?.value)}>
+                    defaultValue={oneData?.brand_id}
+                    onChange={(e) => setBrandId(e?.target?.value)}>
                     {
                       brandGet.map((item, index) => {
                         return <option
@@ -966,6 +982,7 @@ const Cars = () => {
                     className='w-[472px] h-[32px] py-1 px-3 border border-gray-300 rounded-md outline-none'
                     type="number"
                     value={usd}
+                    min={0}
                     minLength={2} />
                 </div>
 
