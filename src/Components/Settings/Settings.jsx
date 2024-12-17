@@ -15,7 +15,7 @@ const Settings = () => {
   const [addModalOpen, setAddModalOpen] = useState(false)
 
   function getCategory() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/categories')
+    axios.get('https://realauto.limsa.uz/api/categories')
       .then((res) => {
         setData(res?.data?.data)
         setData(res?.data?.data)
@@ -36,8 +36,7 @@ const Settings = () => {
 
 
   function deleteHandler() {
-
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/categories/${selectedCategoryId}`, {
       method: 'Delete',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -76,7 +75,7 @@ const Settings = () => {
       return
     }
 
-    fetch('https://autoapi.dezinfeksiyatashkent.uz/api/categories', {
+    fetch('https://realauto.limsa.uz/api/categories', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -107,7 +106,7 @@ const Settings = () => {
       formData.append("images", pic);
     }
 
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/categories/${selectedCategoryId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -156,7 +155,7 @@ const Settings = () => {
                 <tr key={index}>
                   <td className='w-[140px] h-[101px] p-4 border border-gray-200 '>{item?.name_en}</td>
                   <td className='w-[140px] h-[101px] p-4 border border-gray-200 '>{item?.name_ru} </td>
-                  <td className='max-w-[255px] w-full h-[101px] p-4 flex justify-center border border-gray-200 '><img className='w-[100px] h-[62px] ' src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${item?.image_src}`} alt="category" /></td>
+                  <td className='max-w-[255px] w-full h-[101px] p-4 flex justify-center border border-gray-200 '><img className='w-[100px] h-[62px] ' src={`https://realauto.limsa.uz/api/uploads/images/${item?.image_src}`} alt="category" /></td>
                   <td className='w-[300px] h-[102px] p-4 border border-gray-200'>
 
                     <div className='flex flex-row gap-3 justify-center'>
@@ -227,7 +226,7 @@ const Settings = () => {
             <form onSubmit={addCategory} className='add-modal w-[520px] h-[432px] m-auto p-5 bg-white rounded-2xl'>
 
               <div className='flex flex-row justify-between'>
-                <h1 className='font-semibold'>Add New Category</h1>
+                <h1 className='font-semibold'>Vertically centered modal dialog</h1>
                 <button onClick={() => setAddModalOpen(false)}>
                   <i className="fa-solid fa-x text-base text-gray-600"></i>
                 </button>

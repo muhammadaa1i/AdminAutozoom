@@ -8,30 +8,32 @@ const Cars = () => {
   const token = localStorage.getItem('token');
 
   const [data, setData] = useState([])
-  const [oneData, setOneData] = useState({})
+  const [oneData, setOneData] = useState([])
   const [modalInfoOpen, setModalInfoOpen] = useState(false)
   const [addModalOpen, setAddModalOpen] = useState(false)
-  const [selectCategoryId, setSelectCategoryId] = useState('')
+  const [selectCategoryId, setSelectCategoryId] = useState()
+  const [selectBrandId, setSelectBrandId] = useState('')
 
   function getCategory() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/cars')
+    axios.get('https://realauto.limsa.uz/api/cars')
       .then((res) => {
         setData(res?.data?.data)
       })
   }
 
   function getCategoryOne(id) {
-    axios.get(`https://autoapi.dezinfeksiyatashkent.uz/api/cars/${id}`)
+    axios.get(`https://realauto.limsa.uz/api/cars/${id}`)
       .then((res) => {
-        setOneData(res?.data?.data)
+        setOneData([res?.data?.data])
+        setSelectCategoryId(res?.data?.data?.category_id)
+        setSelectBrandId(res?.data?.data?.title)
       })
   }
-  console.log(oneData);
-
   useEffect(() => {
     getCategory()
+    getCategoryOne()
   }, [])
-  console.log(selectCategoryId, "selectCategoryId")
+
 
 
   const [color, setColor] = useState('')
@@ -83,7 +85,7 @@ const Cars = () => {
     formdata.append('images', mainimage)
     formdata.append('cover', coverpic)
 
-    fetch('https://autoapi.dezinfeksiyatashkent.uz/api/cars', {
+    fetch('https://realauto.limsa.uz/api/cars', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -101,15 +103,16 @@ const Cars = () => {
       });
   }
 
-  const [categoryGet, setCategoryGet] = useState('')
+  const [categoryGet, setCategoryGet] = useState([])
   const [categoryID, setCategoryID] = useState('')
 
   function getCategories() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/categories')
+    axios.get('https://realauto.limsa.uz/api/categories')
       .then((res) => {
         setCategoryGet(res?.data?.data)
       })
   }
+  console.log(categoryGet)
 
   useEffect(() => {
     getCategories()
@@ -119,9 +122,11 @@ const Cars = () => {
   const [brandGet, setBrandGet] = useState('')
 
   function getBrands() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/brands')
+    axios.get('https://realauto.limsa.uz/api/brands')
       .then((res) => {
         setBrandGet(res?.data?.data)
+        console.log(res.data.data);
+
       })
   }
 
@@ -133,7 +138,7 @@ const Cars = () => {
   const [modelGet, setModelGet] = useState('')
 
   function getModels() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/models')
+    axios.get('https://realauto.limsa.uz/api/models')
       .then((res) => {
         setModelGet(res?.data?.data)
       })
@@ -147,7 +152,7 @@ const Cars = () => {
   const [locationsGet, setLocationsGet] = useState('')
 
   function getLocations() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/locations')
+    axios.get('https://realauto.limsa.uz/api/locations')
       .then((res) => {
         setLocationsGet(res?.data?.data)
       })
@@ -161,13 +166,13 @@ const Cars = () => {
 
   const handleToggle = () => {
     setIsToggled(!isToggled);
-  };
+  }
 
   const [CityId, setCityId] = useState('')
   const [CityGet, setCityGet] = useState('')
 
   function getCity() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/cities')
+    axios.get('https://realauto.limsa.uz/api/cities')
       .then((res) => {
         setCityGet(res?.data?.data)
       })
@@ -181,34 +186,7 @@ const Cars = () => {
 
   function editHandler(e) {
     e.preventDefault()
-
-    const formdata = new FormData();
-    formdata.append('category_id', selectCategoryId)
-    formdata.append('brand_id', brandId)
-    formdata.append('model_id', modelID)
-    formdata.append('location_id', LocationsID)
-    formdata.append('city_id', CityId)
-    formdata.append('color', color)
-    formdata.append('year', yil)
-    formdata.append('seconds', seconds)
-    formdata.append('max_speed', speed)
-    formdata.append('max_people', maxpeople)
-    formdata.append('motor', motor)
-    formdata.append('transmission', transmission)
-    formdata.append('drive_side', driverside)
-    formdata.append('petrol', yoqilgi)
-    formdata.append('limitperday', limitperday)
-    formdata.append('deposit', deposit)
-    formdata.append('premium_protection', protectionprice)
-    formdata.append('price_in_aed', aed)
-    formdata.append('price_in_usd_sale', usdotd)
-    formdata.append('price_in_aed_sale', aedotd)
-    formdata.append('price_in_usd', usd)
-    formdata.append('images', carimages)
-    formdata.append('images', mainimage)
-    formdata.append('cover', coverpic);
-
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/cars/${selectCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/cars/${selectCategoryId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -217,7 +195,7 @@ const Cars = () => {
     })
       .then((res) => res.json())
       .then((item) => {
-        if (item.success) {
+        if (item?.success) {
           toast.success(item?.message);
           getCategory();
           setEditModalOpen(false);
@@ -231,8 +209,7 @@ const Cars = () => {
   }
 
   function deleteHandler() {
-
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/cars/${selectCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/cars/${selectCategoryId}`, {
       method: 'Delete',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -253,7 +230,6 @@ const Cars = () => {
         console.error("Error deleting item:", error);
       })
   }
-
 
   return (
     <div>
@@ -279,8 +255,8 @@ const Cars = () => {
 
           <tbody>
             {
-              data.map((item, index) => (
-                <tr key={index}>
+              data.map((item) => (
+                <tr key={item.id}>
                   <td className='w-[140px] h-[101px] p-4 border border-gray-200 '>{item?.brand?.title}</td>
                   <td className='w-[140px] h-[101px] p-4 border border-gray-200 '>{item?.model?.name}</td>
                   <td className='w-[140px] h-[101px] p-4 border border-gray-200 '>{item?.color}</td>
@@ -292,7 +268,8 @@ const Cars = () => {
                       <button
                         onClick={() => {
                           setEditModalOpen(true)
-                          setSelectCategoryId(item.id)
+                          setSelectCategoryId(item?.id)
+                          setSelectBrandId(item?.id)
                           getCategoryOne(item?.id)
                         }}
                         className='btn w-[52px] h-[32px] bg-[#1677FF] rounded-lg '>
@@ -301,7 +278,7 @@ const Cars = () => {
 
                       <button onClick={() => {
                         setModalInfoOpen(true)
-                        setSelectCategoryId(item.id)
+                        setSelectCategoryId(item?.id)
                         setCategoryID(item.category_id)
                       }}
                         className='btn w-[52px] h-[32px] rounded-lg bg-red-500'>
@@ -734,16 +711,16 @@ const Cars = () => {
                 <div className='flex flex-col gap-1'>
                   <h1>*Category</h1>
                   <select
-                    // defaultValue={""}
+                    value={selectCategoryId}
                     className='outline-none border border-gray-300 rounded-md p-1'
                     onChange={(e) => setSelectCategoryId(e?.target?.value)}>
                     {
-                      categoryGet?.map((item, index) => {
-                        return <option
+                      categoryGet?.map((item, index) => (
+                        <option
                           className='w-[120px] h-[32px] border border-gray-300 rounded-md' key={index} value={item.id}>
-                          {item.name_en}
+                          {item?.name_en}
                         </option>
-                      })
+                      ))
                     }
                   </select>
                 </div>
@@ -752,13 +729,13 @@ const Cars = () => {
                   <h1>*Brand</h1>
                   <select
                     className='outline-none border border-gray-300 rounded-md p-1'
-                    defaultValue={oneData?.brand_id}
-                    onChange={(e) => setBrandId(e?.target?.value)}>
+                    value={selectBrandId}
+                    onChange={(e) => setSelectBrandId(e?.target?.value)}>
                     {
-                      brandGet.map((item, index) => {
+                      brandGet.map((item) => {
                         return <option
-                          className='w-[60px] h-[32px] border border-gray-300 rounded-md' key={index} value={item.id}>
-                          {item.title}
+                          className='w-[60px] h-[32px] border border-gray-300 rounded-md' key={item.id} value={item.id}>
+                          {item?.title}
                         </option>
                       })
                     }
@@ -1065,7 +1042,7 @@ const Cars = () => {
                 </button>
 
                 <button
-                  onClick={(e) => editCategory(e)}
+                  onClick={(e) => editHandler(e)}
                   type='submit'
                   className='w-[46px] h-[32px] py-1 px-4 bg-[#1677FF] text-white rounded-md flex justify-center'>
                   Save

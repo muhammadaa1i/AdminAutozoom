@@ -12,7 +12,7 @@ const Login = () => {
     function loginSubmit(e) {
         e.preventDefault();
 
-        fetch('https://autoapi.dezinfeksiyatashkent.uz/api/auth/signin', {
+        fetch('https://realauto.limsa.uz/api/auth/signin', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -25,11 +25,14 @@ const Login = () => {
             .then((res) => res.json())
             .then((result) => {
                 if (result?.success) {
-                    toast.success(result?.message);
-                    localStorage.setItem("token", result?.data?.tokens?.accessToken?.token);
-                    navigate('/admin/dashboard');
+                    toast.success(result?.message)
+                    localStorage.setItem("token", result?.data?.tokens?.accessToken?.token)
+                    navigate('/admin/dashboard', { replace: true });
+                    setTimeout(() => {
+                        localStorage.removeItem("token");
+                    }, 0)
                 } else {
-                    toast.error(result?.message);
+                    toast.error(result?.message)
                 }
             })
     }

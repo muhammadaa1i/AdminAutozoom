@@ -28,7 +28,7 @@ const App = () => {
       <ToastContainer position='top-center' autoClose={3000} />
       <Routes>
         <Route path="/" element={<Navigate to={token ? "/admin/dashboard" : "/login"} replace />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/admin/dashboard" element={token ? <AdminLayout /> : <Navigate to="/login" replace />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />

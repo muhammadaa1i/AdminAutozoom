@@ -13,7 +13,7 @@ const Locations = () => {
   const [addModalOpen, setAddModalOpen] = useState(false)
 
   function getCategory() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/locations')
+    axios.get('https://realauto.limsa.uz/api/locations')
       .then((res) => {
         setData(res?.data?.data)
       })
@@ -49,7 +49,7 @@ const Locations = () => {
       return
     }
 
-    fetch('https://autoapi.dezinfeksiyatashkent.uz/api/locations', {
+    fetch('https://realauto.limsa.uz/api/locations', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const Locations = () => {
 
   function deleteHandler() {
 
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/locations/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/locations/${selectedCategoryId}`, {
       method: 'Delete',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -103,7 +103,7 @@ const Locations = () => {
       formData.append("images", pic);
     }
 
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/locations/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/locations/${selectedCategoryId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`

@@ -15,7 +15,7 @@ const Brands = () => {
   const [pic, setPic] = useState(null)
 
   function getCategory() {
-    axios.get('https://autoapi.dezinfeksiyatashkent.uz/api/brands')
+    axios.get('https://realauto.limsa.uz/api/brands')
       .then((res) => {
         setData(res?.data?.data)
       })
@@ -45,7 +45,7 @@ const Brands = () => {
       return
     }
 
-    fetch('https://autoapi.dezinfeksiyatashkent.uz/api/brands', {
+    fetch('https://realauto.limsa.uz/api//brands', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -66,7 +66,7 @@ const Brands = () => {
 
   function deleteHandler() {
 
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/brands/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/brands/${selectedCategoryId}`, {
       method: 'Delete',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -100,7 +100,7 @@ const Brands = () => {
       formData.append("images", pic);
     }
 
-    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/brands/${selectedCategoryId}`, {
+    fetch(`https://realauto.limsa.uz/api/brands/${selectedCategoryId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
