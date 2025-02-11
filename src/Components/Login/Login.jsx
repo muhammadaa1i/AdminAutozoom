@@ -28,9 +28,6 @@ const Login = () => {
                     toast.success(result?.message)
                     localStorage.setItem("token", result?.data?.tokens?.accessToken?.token)
                     navigate('/admin/dashboard', { replace: true });
-                    setTimeout(() => {
-                        localStorage.removeItem("token");
-                    }, 0)
                 } else {
                     toast.error(result?.message)
                 }

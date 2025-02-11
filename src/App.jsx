@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
-import Login from './Components/Login/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import AdminLayout from './Layout/AdminLayout';
 import Settings from './Components/Settings/Settings';
@@ -14,22 +13,22 @@ import Cars from './Components/Cars/Cars';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login", { replace: true });
+    setToken(localStorage.getItem("token"))
+    if (!localStorage.getItem("token")) {
+      navigate("/admin/dashboard", { replace: true })
     }
-  }, [token, navigate]);
+  }, [])
 
   return (
     <>
       <ToastContainer position='top-center' autoClose={3000} />
       <Routes>
-        <Route path="/" element={<Navigate to={token ? "/admin/dashboard" : "/login"} replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={token ? <AdminLayout /> : <Navigate to="/login" replace />}>
+        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/admin/dashboard" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="settings" element={<Settings />} />

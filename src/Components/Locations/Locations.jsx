@@ -26,9 +26,9 @@ const Locations = () => {
 
   useEffect(() => {
     if (addModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'
     }
   }, [addModalOpen]);
 
@@ -103,7 +103,7 @@ const Locations = () => {
       formData.append("images", pic);
     }
 
-    fetch(`https://realauto.limsa.uz/api/locations/${selectedCategoryId}`, {
+    fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/locations/${selectedCategoryId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
